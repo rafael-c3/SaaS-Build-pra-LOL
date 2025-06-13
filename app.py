@@ -1,3 +1,9 @@
+import subprocess
+import sys
+
+# Tenta instalar a lib durante o deploy (gambiarra permitida pelo Streamlit Cloud)
+subprocess.check_call([sys.executable, "-m", "pip", "install", "google-generativeai==0.8.5"])
+
 import streamlit as st
 import google.generativeai as genai
 
