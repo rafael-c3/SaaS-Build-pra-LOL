@@ -1,15 +1,9 @@
-import subprocess
-import sys
-
-# Tenta instalar a lib durante o deploy (gambiarra permitida pelo Streamlit Cloud)
-subprocess.check_call([sys.executable, "-m", "pip", "install", "google-generativeai==0.8.5"])
-
 import streamlit as st
 import google.generativeai as genai
 
 # ===== CONFIGURAÇÃO INICIAL =====
 st.set_page_config(page_title="Gerador de Builds - LoL com Gemini", page_icon=":game_die:")
-st.title("🔮 Gerador de Builds no League of Legends com Gemini")
+st.title("BUILD GAP")
 
 # ===== CONFIGURAR GEMINI =====
 genai.configure(api_key="AIzaSyDmlAswr06Fnw7YgulArivaF7vHIA5AnCk")  # Substitua pela sua chave da API Gemini
@@ -21,7 +15,7 @@ campeao = st.text_input("Qual campeão você está usando?")
 # Pergunta condicional se for Kayn
 forma_kayn = ""
 if campeao.strip().lower() == "kayn":
-    forma_kayn = st.selectbox("Qual forma do Kayn você está usando?", ["", "Kayn Azul (Assassino das Sombras)", "Kayn Vermelho (Rhaast)"])
+    forma_kayn = st.selectbox("Qual forma do Kayn você está usando?", ["Kayn Azul (Assassino das Sombras)", "Kayn Vermelho (Rhaast)"])
 
 modo_jogo = st.selectbox("Qual modo de jogo?", ["Normal", "Ranked", "ARAM"])
 
