@@ -1,18 +1,14 @@
 import streamlit as st
 import google.generativeai as genai
 
-# ===== CONFIGURAÇÃO INICIAL =====
 st.set_page_config(page_title="Gerador de Builds - LoL com Gemini", page_icon=":game_die:")
 st.title("BUILD GAP")
 
-# ===== CONFIGURAR GEMINI =====
-genai.configure(api_key="AIzaSyDmlAswr06Fnw7YgulArivaF7vHIA5AnCk")  # Substitua pela sua chave da API Gemini
+genai.configure(api_key="AIzaSyDmlAswr06Fnw7YgulArivaF7vHIA5AnCk")
 model = genai.GenerativeModel('gemini-1.5-flash')
 
-# ===== FORMULÁRIO =====
 campeao = st.text_input("Qual campeão você está usando?")
 
-# Pergunta condicional se for Kayn
 forma_kayn = ""
 if campeao.strip().lower() == "kayn":
     forma_kayn = st.selectbox("Qual forma do Kayn você está usando?", ["Kayn Azul (Assassino das Sombras)", "Kayn Vermelho (Rhaast)"])
@@ -23,12 +19,10 @@ rota = st.selectbox("Qual rota você está jogando?", ["Top", "Jungle", "Mid", "
 
 adversario = st.text_input("Qual campeão adversário?")
 
-# Pergunta obrigatória com radio buttons
 ameaça_adversario = st.radio("O campeão adversário é uma ameaça para você?", ["Sim", "Não"])
 
 preferencia_build = st.radio("Preferência de Build? (Opcional)", ["", "AP", "AD"])
 
-# Aliados e inimigos (opcionais)
 st.subheader("Seu time (opcional):")
 time_aliado = []
 for i in range(4):
@@ -41,7 +35,6 @@ for i in range(4):
     champ = st.text_input(f"Campeão inimigo {i+1} (opcional):")
     time_inimigo.append(champ)
 
-# ===== GERAÇÃO DO PROMPT E CONSULTA AO GEMINI =====
 if st.button("Gerar Recomendação com Gemini"):
     prompt = f"Estou jogando League of Legends com o campeão {campeao} no modo {modo_jogo}, na rota {rota}.\n"
 
@@ -68,7 +61,6 @@ if st.button("Gerar Recomendação com Gemini"):
     st.subheader("📝 Prompt Gerado:")
     st.text_area("Prompt para Gemini:", value=prompt, height=250)
 
-    # Consulta ao Gemini
     with st.spinner("Consultando o Gemini..."):
         response = model.generate_content(prompt)
         resposta = response.text
